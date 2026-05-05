@@ -30,7 +30,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
-    ) throws ServletException, IOException {
+    ) throws ServletException, IOException, JwtException {
 
         log.info("JWT FILTER: " + request.getMethod() + " " + request.getRequestURI());
 
@@ -42,36 +42,49 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        // достаём Authorization header
-        String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        try {
+            // достаём Authorization header
+            String authHeader = request.getHeader("Authorization");
+
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            String token = authHeader.substring(7);
+
+            // валидируем токен
+            jwtService.validateToken(token);
+
+            //извлекаем userId
+            Long userId = jwtService.extractUserId(token);
+
+            //ложим userId в SecurityContext
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            userId,   //principal
+                            null,
+                            List.of()
+                    );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // рередаём запрос дальше
+            filterChain.doFilter(request, response);
+
+            // добавленна обработка ошибок
+        } catch (JwtException ex) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+            response.setContentType("application/json");
+
+            response.getWriter().write(
+            """
+            {
+              "errorCode": "JWT_ERROR",
+              "message": "%s"
+            }
+            """.formatted(ex.getMessage()));
         }
-
-        String token = authHeader.substring(7);
-
-        // валидируем токен
-        if (!jwtService.validateToken(token)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-        //извлекаем userId
-        Long userId = jwtService.extractUserId(token);
-
-        //ложим userId в SecurityContext
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(
-                        userId,   //principal
-                        null,
-                        List.of()
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // рередаём запрос дальше
-        filterChain.doFilter(request, response);
     }
 }

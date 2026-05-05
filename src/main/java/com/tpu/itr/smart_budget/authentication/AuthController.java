@@ -2,6 +2,7 @@ package com.tpu.itr.smart_budget.authentication;
 
 
 
+import com.tpu.itr.smart_budget.authentication.Utils.PhoneValidator;
 import com.tpu.itr.smart_budget.authentication.dto.LoginRequest;
 import com.tpu.itr.smart_budget.authentication.dto.RegisterRequest;
 import com.tpu.itr.smart_budget.authentication.user.UserService;
@@ -28,22 +29,27 @@ public class AuthController {
         @RequestBody RegisterRequest registerRequest
     ) {
         log.info(String.format(
-                "called AuthController.register, email: %s, phone: %s",
-                registerRequest.email(), registerRequest.phone_number())
+                "called AuthController.register, phone: %s",
+                registerRequest.phone_number())
         );
+
+
         String jwtString = userService.register(registerRequest);
         return ResponseEntity.ok().body(jwtString);
+
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> register(
+    public ResponseEntity<String> login(
             @RequestBody LoginRequest loginRequest
     ) {
+
         log.info(String.format(
-                "called AuthController.register, email: %s, phone: %s",
-                loginRequest.email(), loginRequest.phone_number())
+                "called AuthController.login, phone: %s",
+                 loginRequest.phone_number())
         );
+
         String jwtString = userService.login(loginRequest);
         return ResponseEntity.ok().body(jwtString);
     }

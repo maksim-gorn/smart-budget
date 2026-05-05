@@ -60,10 +60,9 @@ public class JWTService {
     }
 
     // проверка токена
-    public Boolean validateToken(String token) {
+    public void validateToken(String token) {
         if (token == null || token.isEmpty()) {
-            System.out.println("Token is empty");
-            return false;
+            throw new JwtException("Token is empty");
         }
 
         try {
@@ -71,20 +70,16 @@ public class JWTService {
             boolean isExpired = claims.getExpiration().before(new Date());
 
             if (isExpired) {
-                System.out.println("Token expired" + claims.getExpiration());
-                return false;
+                throw new JwtException("Token expired: " + claims.getExpiration());
             }
 
             System.out.println("Token is valid for user: " + claims.get("userId"));
-            return true;
 
         } catch (MalformedJwtException e) {
-            System.out.println("MalformedJwtException " + e.getMessage());
-            return false;
+            throw new JwtException("MalformedJwtException " + e.getMessage());
 
         } catch (ExpiredJwtException e) {
-            System.out.println("ExpiredJwtException " + e.getMessage());
-            return false;
+            throw new JwtException("ExpiredJwtException: " + e.getMessage());
 
         }
     }

@@ -77,6 +77,14 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- google libphonenumber для проверки валидности номера -->
+		<dependency>
+			<groupId>com.googlecode.libphonenumber</groupId>
+			<artifactId>libphonenumber</artifactId>
+			<version>9.0.29</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

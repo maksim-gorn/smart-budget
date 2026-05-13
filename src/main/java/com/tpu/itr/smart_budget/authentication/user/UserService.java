@@ -49,6 +49,12 @@ public class UserService {
             throw new BadRequestException("Phone number is incorrect");
         }
 
+        Optional<UserEntity> userOptional = userRepository.findByPhoneNumber(registerRequest.phone_number());
+
+        if (userOptional.isPresent()){
+            throw new BadRequestException("Phone number is already present");
+        }
+
         String hashedPassword = passwordEncoder.encode(registerRequest.password());
         var userEntity = new UserEntity(
                 null,

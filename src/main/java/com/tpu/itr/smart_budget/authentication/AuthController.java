@@ -3,6 +3,7 @@ package com.tpu.itr.smart_budget.authentication;
 
 
 import com.tpu.itr.smart_budget.authentication.Utils.PhoneValidator;
+import com.tpu.itr.smart_budget.authentication.dto.JwtResponse;
 import com.tpu.itr.smart_budget.authentication.dto.LoginRequest;
 import com.tpu.itr.smart_budget.authentication.dto.RegisterRequest;
 import com.tpu.itr.smart_budget.authentication.user.UserService;
@@ -25,7 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(
+    public ResponseEntity<JwtResponse> register(
         @RequestBody RegisterRequest registerRequest
     ) {
         log.info(String.format(
@@ -35,13 +36,14 @@ public class AuthController {
 
 
         String jwtString = userService.register(registerRequest);
-        return ResponseEntity.ok().body(jwtString);
+        JwtResponse jwtResponse = new JwtResponse(jwtString);
+        return ResponseEntity.ok().body(jwtResponse);
 
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<JwtResponse> login(
             @RequestBody LoginRequest loginRequest
     ) {
 
@@ -51,7 +53,10 @@ public class AuthController {
         );
 
         String jwtString = userService.login(loginRequest);
-        return ResponseEntity.ok().body(jwtString);
+        JwtResponse jwtResponse = new JwtResponse(jwtString);
+        return ResponseEntity.ok().body(jwtResponse);
     }
+
+    //@PostMapping("/logout")
 
 }

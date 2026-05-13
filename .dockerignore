@@ -1,0 +1,11 @@
+.git
+.gitignore
+.idea
+.mvn
+*.iml
+README.md
+HELP.md
+target/dependency
+node_modules
+.env.local
+.DS_Store

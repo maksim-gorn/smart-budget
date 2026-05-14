@@ -9,8 +9,6 @@ import com.tpu.itr.smart_budget.authentication.dto.LoginRequest;
 import com.tpu.itr.smart_budget.authentication.dto.RegisterRequest;
 import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
 import com.tpu.itr.smart_budget.common.BadRequestException;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +63,7 @@ public class UserService {
 
         var savedUserEntity = userRepository.save(userEntity);
 
-        String jwtString = jwtService.generateToken(savedUserEntity.getId());
-        return jwtString;
+        return jwtService.generateToken(savedUserEntity.getId());
 
     }
 

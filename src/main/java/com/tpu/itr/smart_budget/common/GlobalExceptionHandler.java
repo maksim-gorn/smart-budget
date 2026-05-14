@@ -1,6 +1,5 @@
 package com.tpu.itr.smart_budget.common;
 
-import com.tpu.itr.smart_budget.authentication.JWT.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

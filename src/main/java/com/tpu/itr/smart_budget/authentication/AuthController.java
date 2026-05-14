@@ -2,7 +2,6 @@ package com.tpu.itr.smart_budget.authentication;
 
 
 
-import com.tpu.itr.smart_budget.authentication.Utils.PhoneValidator;
 import com.tpu.itr.smart_budget.authentication.dto.JwtResponse;
 import com.tpu.itr.smart_budget.authentication.dto.LoginRequest;
 import com.tpu.itr.smart_budget.authentication.dto.RegisterRequest;
@@ -10,7 +9,6 @@ import com.tpu.itr.smart_budget.authentication.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

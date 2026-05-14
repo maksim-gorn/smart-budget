@@ -32,6 +32,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException, JwtException {
 
+        if (request.getMethod().equals("OPTIONS")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         log.info("JWT FILTER: " + request.getMethod() + " " + request.getRequestURI());
 
         String path = request.getRequestURI();

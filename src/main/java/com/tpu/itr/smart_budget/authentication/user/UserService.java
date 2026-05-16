@@ -7,7 +7,6 @@ import com.tpu.itr.smart_budget.authentication.JWT.JWTService;
 import com.tpu.itr.smart_budget.authentication.Utils.PhoneValidator;
 import com.tpu.itr.smart_budget.authentication.dto.LoginRequest;
 import com.tpu.itr.smart_budget.authentication.dto.RegisterRequest;
-import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
 import com.tpu.itr.smart_budget.common.BadRequestException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,12 +34,17 @@ public class UserService {
 
     public String register(RegisterRequest registerRequest)
     {
+
         if (registerRequest.phone_number().isEmpty()) {
             throw new BadRequestException("No phone number presented");
         }
 
         if (registerRequest.password().isEmpty()) {
             throw new BadRequestException("No password presented");
+        }
+
+        if (!registerRequest.phone_number().matches("^\\+?[0-9]{7,15}$")) {
+            throw new BadRequestException("Phone number contains invalid characters");
         }
 
         if (!PhoneValidator.isValid(registerRequest.phone_number(), null)) {

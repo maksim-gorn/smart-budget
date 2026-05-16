@@ -1,6 +1,5 @@
 package com.tpu.itr.smart_budget.authentication.user;
 
-import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

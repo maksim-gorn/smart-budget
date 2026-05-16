@@ -1,4 +1,4 @@
-package com.tpu.itr.smart_budget.authentication.dto;
+package com.tpu.itr.smart_budget.authentication.user;
 
 
 import jakarta.persistence.*;

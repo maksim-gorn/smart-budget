@@ -1,4 +1,4 @@
-package com.tpu.itr.smart_budget.transaction.dto;
+package com.tpu.itr.smart_budget.transaction.webClient.dto;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package com.tpu.itr.smart_budget;
+package com.tpu.itr.smart_budget.common;
 
 import com.tpu.itr.smart_budget.authentication.JWT.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;

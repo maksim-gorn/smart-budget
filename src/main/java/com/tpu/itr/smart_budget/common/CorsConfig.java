@@ -1,4 +1,4 @@
-package com.tpu.itr.smart_budget;
+package com.tpu.itr.smart_budget.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

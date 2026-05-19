@@ -7,6 +7,7 @@ import com.tpu.itr.smart_budget.authentication.JWT.JWTService;
 import com.tpu.itr.smart_budget.authentication.Utils.PhoneValidator;
 import com.tpu.itr.smart_budget.authentication.dto.LoginRequest;
 import com.tpu.itr.smart_budget.authentication.dto.RegisterRequest;
+import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
 import com.tpu.itr.smart_budget.common.BadRequestException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

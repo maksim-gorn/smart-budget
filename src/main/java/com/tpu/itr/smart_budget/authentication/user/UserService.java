@@ -89,5 +89,4 @@ public class UserService {
 
         return jwtService.generateToken(userFromDB.getId());
     }
-
 }

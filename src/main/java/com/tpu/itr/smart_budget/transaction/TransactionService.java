@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class TransactionService {
@@ -38,11 +39,17 @@ public class TransactionService {
     public void update(Long userId){
         UserApiKeyEntity userApiKeyEntity = userApiKeyRepository.getReferenceById(userId);
         String key = userApiKeyEntity.getApiKey();
-        apiService.getTransactions(key, LocalDate.now().minusDays(10),
-                LocalDate.now().plusDays(10))
-                .subscribe(transactionsResponse ->
-                {log.info("Got TransactionResponse containing "+ transactionsResponse.total()+" items");
-                });
+        TransactionsResponse transactionsResponse = apiService.getTransactions(key,
+                userApiKeyEntity.getLast_update().toLocalDate().minusDays(1),
+                LocalDate.now());
+        //todo: определить категории трат по mcc
+        //todo: сохранение в budgetmodule, там же и проверка что бы не сохранить повторно транзакции с тем же id
+        log.info("Fetched "+transactionsResponse.total()+" transctions");
+        log.info("Fetched transactions from: "+
+                userApiKeyEntity.getLast_update().toLocalDate().minusDays(1)
+                + " until: "+ LocalDate.now());
+        userApiKeyEntity.setLast_update(LocalDateTime.now());
+        userApiKeyRepository.save(userApiKeyEntity);
     }
 }
 

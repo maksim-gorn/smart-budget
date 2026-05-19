@@ -17,7 +17,7 @@ public class ApiService {
         this.webClient = webClient;
     }
 
-    public Mono<TransactionsResponse> getTransactions(final String key, LocalDate start, LocalDate end)
+    public TransactionsResponse getTransactions(final String key, LocalDate start, LocalDate end)
     {
         TransactionsRequest transactionsRequest = new TransactionsRequest(key, start, end);
         return webClient
@@ -25,7 +25,8 @@ public class ApiService {
                 .uri("/api/gettransactions")
                 .bodyValue(transactionsRequest)
                 .retrieve()
-                .bodyToMono(TransactionsResponse.class);
+                .bodyToMono(TransactionsResponse.class)
+                .block();
     }
 
 }

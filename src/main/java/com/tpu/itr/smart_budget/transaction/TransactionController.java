@@ -41,12 +41,12 @@ public class TransactionController {
 
     // Тестовый мапинг, потом удалю
     @PostMapping("/update")
-    public ResponseEntity<?> update(
+    public ResponseEntity<SuccessResponse> update(
             Authentication authentication
     ){
         Long userId = (Long) authentication.getPrincipal();
         transactionService.update(userId);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(new SuccessResponse("Updated"));
     }
 
 }

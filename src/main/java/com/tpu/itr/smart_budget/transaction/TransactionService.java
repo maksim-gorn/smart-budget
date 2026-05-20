@@ -16,15 +16,18 @@ import java.time.LocalDateTime;
 public class TransactionService {
     private final UserApiKeyRepository userApiKeyRepository;
     private final ApiService apiService;
+    private final com.tpu.itr.smart_budget.budget.TransactionService budgetTransactionService;
 
     private static final Logger log = LoggerFactory.getLogger(TransactionService.class);
 
     public TransactionService(
             UserApiKeyRepository userApiKeyRepository,
-            ApiService apiService
+            ApiService apiService,
+            com.tpu.itr.smart_budget.budget.TransactionService budgetTransactionService
     ) {
         this.userApiKeyRepository = userApiKeyRepository;
         this.apiService = apiService;
+        this.budgetTransactionService = budgetTransactionService;
     }
 
 
@@ -42,12 +45,14 @@ public class TransactionService {
         TransactionsResponse transactionsResponse = apiService.getTransactions(key,
                 userApiKeyEntity.getLast_update().toLocalDate().minusDays(1),
                 LocalDate.now());
-        //todo: определить категории трат по mcc
-        //todo: сохранение в budgetmodule, там же и проверка что бы не сохранить повторно транзакции с тем же id
+
+        budgetTransactionService.addTransactions(userId, transactionsResponse.transactions());
+
         log.info("Fetched "+transactionsResponse.total()+" transctions");
         log.info("Fetched transactions from: "+
                 userApiKeyEntity.getLast_update().toLocalDate().minusDays(1)
                 + " until: "+ LocalDate.now());
+
         userApiKeyEntity.setLast_update(LocalDateTime.now());
         userApiKeyRepository.save(userApiKeyEntity);
     }

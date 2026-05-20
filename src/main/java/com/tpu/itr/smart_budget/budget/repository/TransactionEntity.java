@@ -1,4 +1,4 @@
-package com.tpu.itr.smart_budget.budget;
+package com.tpu.itr.smart_budget.budget.repository;
 
 import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
 import jakarta.persistence.*;
@@ -12,6 +12,9 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "bank_transaction_id", nullable = false)
+    private Long bankTransactionId;
+
     @Column(nullable = false)
     private String merchant;
 
@@ -19,7 +22,7 @@ public class TransactionEntity {
     private String category;
 
     @Column(nullable = false)
-    private Long amount;
+    private Float amount;
 
     @Column(nullable = false)
     private LocalDate date;
@@ -33,18 +36,23 @@ public class TransactionEntity {
 
     public TransactionEntity() {}
 
-    public TransactionEntity(String merchant, String category, Long amount, LocalDate date, UserEntity user) {
+    public TransactionEntity(Long bankTransactionId, String merchant, String category, Float amount, LocalDate date,
+                             String currency, UserEntity user) {
+        this.bankTransactionId = bankTransactionId;
         this.merchant = merchant;
         this.category = category;
         this.amount = amount;
         this.date = date;
         this.user = user;
-        this.currency = "RUB";
+        this.currency = currency;
     }
 
     // Геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public Long getBankTransactionId() { return bankTransactionId; }
+    public void setBankTransactionId(Long bankTransactionId) { this.bankTransactionId = bankTransactionId; }
 
     public String getMerchant() { return merchant; }
     public void setMerchant(String merchant) { this.merchant = merchant; }
@@ -52,8 +60,8 @@ public class TransactionEntity {
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
 
-    public Long getAmount() { return amount; }
-    public void setAmount(Long amount) { this.amount = amount; }
+    public Float getAmount() { return amount; }
+    public void setAmount(Float amount) { this.amount = amount; }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }

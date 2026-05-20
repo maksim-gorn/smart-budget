@@ -1,4 +1,4 @@
-package com.tpu.itr.smart_budget.budget;
+package com.tpu.itr.smart_budget.budget.dto;
 
 import java.time.LocalDate;
 

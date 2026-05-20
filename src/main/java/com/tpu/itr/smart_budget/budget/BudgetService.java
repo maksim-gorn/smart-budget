@@ -2,6 +2,10 @@ package com.tpu.itr.smart_budget.budget;
 
 import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
 import com.tpu.itr.smart_budget.authentication.user.UserRepository;
+import com.tpu.itr.smart_budget.budget.dto.GetSpendingsResponse;
+import com.tpu.itr.smart_budget.budget.dto.TransactionDTO;
+import com.tpu.itr.smart_budget.budget.repository.TransactionEntity;
+import com.tpu.itr.smart_budget.budget.repository.TransactionRepository;
 import com.tpu.itr.smart_budget.common.BadRequestException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -55,19 +59,22 @@ public class BudgetService {
         return new TransactionDTO(transactionRepository.save(transaction));
     }
 
-    @Transactional
-    public TransactionDTO addTransaction(AddTransactionRequest request) {
-        UserEntity currentUser = getCurrentUser();
+//    @Transactional
+//    public TransactionDTO addTransaction(AddTransactionRequest request) {
+//        UserEntity currentUser = getCurrentUser();
+//
+//        TransactionEntity transaction = new TransactionEntity(
+//                request.getMerchant(),
+//                request.getCategory(),
+//                request.getAmount(),
+//                request.getDate(),
+//                currentUser
+//        );
+//
+//        TransactionEntity saved = transactionRepository.save(transaction);
+//        return new TransactionDTO(saved);
+//    }
 
-        TransactionEntity transaction = new TransactionEntity(
-                request.getMerchant(),
-                request.getCategory(),
-                request.getAmount(),
-                request.getDate(),
-                currentUser
-        );
 
-        TransactionEntity saved = transactionRepository.save(transaction);
-        return new TransactionDTO(saved);
-    }
+
 }

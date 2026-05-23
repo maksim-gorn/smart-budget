@@ -1,6 +1,6 @@
 package com.tpu.itr.smart_budget.budget;
 
-import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
+import com.tpu.itr.smart_budget.authentication.user.UserEntity;
 import com.tpu.itr.smart_budget.authentication.user.UserRepository;
 import com.tpu.itr.smart_budget.budget.dto.GetSpendingsResponse;
 import com.tpu.itr.smart_budget.budget.dto.TransactionDTO;

@@ -1,10 +1,10 @@
 .git
 .gitignore
 .idea
-.mvn
 *.iml
 README.md
 HELP.md
+target
 target/dependency
 node_modules
 .env.local

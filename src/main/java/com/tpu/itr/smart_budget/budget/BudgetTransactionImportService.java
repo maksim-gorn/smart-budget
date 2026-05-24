@@ -2,27 +2,29 @@ package com.tpu.itr.smart_budget.budget;
 
 import com.tpu.itr.smart_budget.authentication.user.UserEntity;
 import com.tpu.itr.smart_budget.authentication.user.UserRepository;
+import com.tpu.itr.smart_budget.budget.api.BudgetTransactionImportPort;
+import com.tpu.itr.smart_budget.budget.api.ImportedTransaction;
 import com.tpu.itr.smart_budget.budget.repository.TransactionEntity;
 import com.tpu.itr.smart_budget.budget.repository.TransactionRepository;
-import com.tpu.itr.smart_budget.transaction.utils.MccCategoryResolver;
-import com.tpu.itr.smart_budget.transaction.webClient.dto.Transaction;
+import com.tpu.itr.smart_budget.budget.utils.MccCategoryResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("budgetTransactionService")
-public class TransactionService {
+@Service
+public class BudgetTransactionImportService implements BudgetTransactionImportPort {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
 
-    public TransactionService(TransactionRepository transactionRepository, UserRepository userRepository) {
+    public BudgetTransactionImportService(TransactionRepository transactionRepository, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
     }
 
     @Transactional
-    public void addTransactions(Long userId, List<Transaction> transactions) {
+    @Override
+    public void importTransactions(Long userId, List<ImportedTransaction> transactions) {
         if (transactions == null || transactions.isEmpty()) {
             return;
         }
@@ -32,14 +34,14 @@ public class TransactionService {
 
         //пропускаю если existsByUserAndBankTransactionId, возможно нужна будет другая логика позже
         List<TransactionEntity> newTransactions = transactions.stream()
-                .filter(transaction -> !transactionRepository.existsByUserAndBankTransactionId(user, transaction.id()))
+                .filter(transaction -> !transactionRepository.existsByUserAndBankTransactionId(user, transaction.bankTransactionId()))
                 .map(transaction -> new TransactionEntity(
-                        transaction.id(),
+                        transaction.bankTransactionId(),
                         transaction.merchant(),
                         MccCategoryResolver.resolveCategory(transaction.mcc()),
                         transaction.amount(),
                         transaction.date(),
-                        transaction.currency().name(),
+                        transaction.currency(),
                         user
                 ))
                 .toList();

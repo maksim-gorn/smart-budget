@@ -10,41 +10,21 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
 
   backend:
     container_name: smart_budget_backend
     build:
-      context: ./smart-budget-monolith
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/smart_budget
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       JWT_SECRET: super-secret-jwt-generation-key-228-123456789101112
-      BANKAPI_URL: http://pseudo-api:8081
-    restart: unless-stopped
-
-  pseudo-api:
-    container_name: pseudo_api
-    build:
-      context: ./pseudo_api
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
-    environment:
-      SERVER_PORT: 8081
-    restart: unless-stopped
 
 volumes:
   postgres_data:

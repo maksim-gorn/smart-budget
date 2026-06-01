@@ -14,7 +14,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea/
+.idea
 *.iws
 *.iml
 *.ipr
@@ -36,7 +36,6 @@ build/
 **/application-local.properties
 
 # Compiled files
+target/
 *.class
 
-# OpenYak generated files
-openyak_written/

@@ -1,5 +1,9 @@
 package com.tpu.itr.smart_budget.budget;
 
+import com.tpu.itr.smart_budget.budget.dto.GetSpendingsRequest;
+import com.tpu.itr.smart_budget.budget.dto.GetSpendingsResponse;
+import com.tpu.itr.smart_budget.budget.dto.TransactionDTO;
+import com.tpu.itr.smart_budget.budget.dto.UpdateCategoryRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +26,8 @@ public class BudgetController {
         return budgetService.updateCategory(id, request.getNew_category());
     }
 
-    @PostMapping("/transaction/add")
-    public TransactionDTO addTransaction(@RequestBody AddTransactionRequest request) {
-        return budgetService.addTransaction(request);
-    }
+//    @PostMapping("/transaction/add")
+//    public TransactionDTO addTransaction(@RequestBody AddTransactionRequest request) {
+//        return budgetService.addTransaction(request);
+//    }
 }

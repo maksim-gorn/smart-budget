@@ -1,4 +1,6 @@
-package com.tpu.itr.smart_budget.budget;
+package com.tpu.itr.smart_budget.budget.dto;
+
+import com.tpu.itr.smart_budget.budget.repository.TransactionEntity;
 
 import java.time.LocalDate;
 
@@ -7,7 +9,7 @@ public class TransactionDTO {
     private Long userId;
     private String merchant;
     private String category;
-    private Long amount;
+    private Float amount;
     private LocalDate date;
 
     public TransactionDTO() {}
@@ -34,8 +36,8 @@ public class TransactionDTO {
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
 
-    public Long getAmount() { return amount; }
-    public void setAmount(Long amount) { this.amount = amount; }
+    public Float getAmount() { return amount; }
+    public void setAmount(Float amount) { this.amount = amount; }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }

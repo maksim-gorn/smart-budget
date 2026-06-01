@@ -1,6 +1,6 @@
 package com.tpu.itr.smart_budget.limits;
 
-import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
+import com.tpu.itr.smart_budget.authentication.user.UserEntity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

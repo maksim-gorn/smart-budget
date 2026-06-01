@@ -1,9 +1,9 @@
 package com.tpu.itr.smart_budget.limits;
 
-import com.tpu.itr.smart_budget.authentication.dto.UserEntity;
+import com.tpu.itr.smart_budget.authentication.user.UserEntity;
 import com.tpu.itr.smart_budget.authentication.user.UserRepository;
-import com.tpu.itr.smart_budget.budget.TransactionEntity;
-import com.tpu.itr.smart_budget.budget.TransactionRepository;
+import com.tpu.itr.smart_budget.budget.repository.TransactionEntity;
+import com.tpu.itr.smart_budget.budget.repository.TransactionRepository;
 import com.tpu.itr.smart_budget.common.BadRequestException;
 import com.tpu.itr.smart_budget.common.MessageResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
